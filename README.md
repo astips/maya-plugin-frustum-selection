@@ -1,2 +1,2 @@
 # maya-plugin-frustum-selection
-Maya custom cmd to get viewport frustum objects.
+Maya custom cmd used to get viewport objects.

@@ -10,19 +10,19 @@ Github  :   https://github.com/astips
 #include "frustumSelection.h"
 
 
-void* frustumSelection::creator()
+void* FrustumSelection::creator()
 {
-	return new frustumSelection();
+	return new FrustumSelection();
 }
 
 
-bool frustumSelection::isUndoable() const
+bool FrustumSelection::isUndoable() const
 {
     return true;
 }
 
 
-MSyntax frustumSelection::createSyntax()
+MSyntax FrustumSelection::createSyntax()
 {
     MSyntax syntax;
 	syntax.addFlag( kViewportWidth, kViewportWidthLong, MSyntax::kDouble );
@@ -44,19 +44,19 @@ MSyntax frustumSelection::createSyntax()
 }
 
 
-MStatus frustumSelection::parseArgs( const MArgList& args )
+MStatus FrustumSelection::parseArgs( const MArgList& args )
 {
-	MStatus         stat;
+	MStatus         status;
 	MArgDatabase	argData(syntax(), args);
 
 	if( argData.isFlagSet( kViewportWidth ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kViewportWidth, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kViewportWidth, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "viewportWidth flag parsing failed" );
-			return stat;
+			status.perror( "viewportWidth flag parsing failed" );
+			return status;
 		}
 		width = (unsigned int)tmp;
 	}
@@ -68,11 +68,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kViewportHeight ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kViewportHeight, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kViewportHeight, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "viewportHeight flag parsing failed" );
-			return stat;
+			status.perror( "viewportHeight flag parsing failed" );
+			return status;
 		}
 		height = (unsigned int)tmp;
 	}
@@ -84,11 +84,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kStartFrame ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kStartFrame, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kStartFrame, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "startFrame flag parsing failed" );
-			return stat;
+			status.perror( "startFrame flag parsing failed" );
+			return status;
 		}
 		startFrame = tmp;
 		isFrameSet = true;
@@ -101,11 +101,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kEndFrame ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kEndFrame, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kEndFrame, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "endFrame flag parsing failed" );
-			return stat;
+			status.perror( "endFrame flag parsing failed" );
+			return status;
 		}
 		endFrame = tmp;
 		isFrameSet = true;
@@ -118,11 +118,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kUseTimeSlider ) )
 	{
 		bool tmp;
-		stat = argData.getFlagArgument( kUseTimeSlider, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kUseTimeSlider, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "useTimeSlider flag parsing failed" );
-			return stat;
+			status.perror( "useTimeSlider flag parsing failed" );
+			return status;
 		}
 		useSlider = tmp;
 	}
@@ -145,11 +145,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kInvert ) )
 	{
 		bool tmp;
-		stat = argData.getFlagArgument( kInvert, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kInvert, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "invert flag parsing failed" );
-			return stat;
+			status.perror( "invert flag parsing failed" );
+			return status;
 		}
 		invert = tmp;
 	}
@@ -161,11 +161,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoLeft ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoLeft, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoLeft, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoLeft flag parsing failed" );
-			return stat;
+			status.perror( "orthoLeft flag parsing failed" );
+			return status;
 		}
 		orthoL = tmp;
 	}
@@ -177,11 +177,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoRight ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoRight, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoRight, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoRight flag parsing failed" );
-			return stat;
+			status.perror( "orthoRight flag parsing failed" );
+			return status;
 		}
 		orthoR = tmp;
 	}
@@ -193,11 +193,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoBottom ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoBottom, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoBottom, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoBottom flag parsing failed" );
-			return stat;
+			status.perror( "orthoBottom flag parsing failed" );
+			return status;
 		}
 		orthoB = tmp;
 	}
@@ -209,11 +209,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoTop ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoTop, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoTop, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoTop flag parsing failed" );
-			return stat;
+			status.perror( "orthoTop flag parsing failed" );
+			return status;
 		}
 		orthoT = tmp;
 	}
@@ -225,11 +225,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoNear ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoNear, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoNear, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoNear flag parsing failed" );
-			return stat;
+			status.perror( "orthoNear flag parsing failed" );
+			return status;
 		}
 		orthoN = tmp;
 	}
@@ -241,11 +241,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if( argData.isFlagSet( kOrthoFar ) )
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoFar, 0, tmp );
-		if( !stat )
+		status = argData.getFlagArgument( kOrthoFar, 0, tmp );
+		if( !status )
 		{
-			stat.perror( "orthoFar flag parsing failed" );
-			return stat;
+			status.perror( "orthoFar flag parsing failed" );
+			return status;
 		}
 		orthoF = tmp;
 	}
@@ -257,11 +257,11 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	if(argData.isFlagSet( kOrthoZ ))
 	{
 		double tmp;
-		stat = argData.getFlagArgument( kOrthoZ, 0, tmp );
-		if(!stat)
+		status = argData.getFlagArgument( kOrthoZ, 0, tmp );
+		if(!status)
 		{
-			stat.perror( "orthoZ flag parsing failed" );
-			return stat;
+			status.perror( "orthoZ flag parsing failed" );
+			return status;
 		}
 		orthoZ = tmp;
 	}
@@ -273,7 +273,7 @@ MStatus frustumSelection::parseArgs( const MArgList& args )
 	return MS::kSuccess;
 }
 
-void frustumSelection::traverseObjects( MSelectionList& list, MDagPathArray& cam )
+void FrustumSelection::traverseObjects( MSelectionList& list, MDagPathArray& cam )
 {
 	unsigned int cam_i;
 	unsigned int cam_num = cam.length();
@@ -314,7 +314,7 @@ void frustumSelection::traverseObjects( MSelectionList& list, MDagPathArray& cam
 	}
 }
 
-void frustumSelection::traverseAll( MSelectionList& list )
+void FrustumSelection::traverseAll( MSelectionList& list )
 {
 	MDrawTraversal *trav = new MDrawTraversal;
 	trav->enableFiltering( false );
@@ -354,7 +354,7 @@ void frustumSelection::traverseAll( MSelectionList& list )
 	}
 }
 
-MStatus frustumSelection::doIt( const MArgList& args )
+MStatus FrustumSelection::doIt( const MArgList& args )
 {
 	MStatus status = parseArgs( args );
 	if( MS::kSuccess != status ) 
@@ -443,12 +443,12 @@ MStatus initializePlugin(MObject obj)
     MStatus   status;
     MFnPlugin plugin( obj, "astips", "1.0", "Any" );
 
-    status = plugin.registerCommand( "frustumSelection",
-									 frustumSelection::creator,
-									 frustumSelection::createSyntax );
+    status = plugin.registerCommand( CMD_NAME,
+									 FrustumSelection::creator,
+									 FrustumSelection::createSyntax );
     if ( !status ) 
     {
-        status.perror( "registering frustumSelection command" );
+        status.perror( "registering frustumSelection command failed." );
         return status;
     }
 
@@ -461,10 +461,10 @@ MStatus uninitializePlugin( MObject obj )
     MStatus   status;
     MFnPlugin plugin( obj );
 
-    status = plugin.deregisterCommand( "frustumSelection" );
+    status = plugin.deregisterCommand( CMD_NAME );
     if ( !status )
     {
-        status.perror( "deregistering frustumSelection command" );
+        status.perror( "deregistering frustumSelection command failed." );
         return status;
     }
     return status;

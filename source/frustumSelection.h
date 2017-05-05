@@ -59,12 +59,14 @@ Github  :   https://github.com/astips
 #define kOrthoZ				"-oz"
 #define kOrthoZLong			"-orthoZ"
 
+#define CMD_NAME            "frustumSelection"
 
-class frustumSelection : public MPxCommand
+
+class FrustumSelection : public MPxCommand
 {
 public:
-						frustumSelection() {};
-	virtual				~frustumSelection() {};
+						FrustumSelection() {};
+	virtual				~FrustumSelection() {};
 
 	static void*		creator();
 	static	MSyntax		createSyntax();
